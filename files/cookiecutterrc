@@ -1,0 +1,10 @@
+default_context:
+    author_name: "Jason Belk"
+    author_email: "jason.belk@networktocode.com"
+    github_username: "jabelk"
+    project_name: "ntc_confd_sot"
+    project_description: "NTC Source of Truth Project using ConfD"
+    yang_module: "ntc_sot"
+cookiecutters_dir: "/home/vagrant/cookiecutter-confd/"
+abbreviations:
+    cc: https://github.com/jabelk/cookiecutter-confd.git

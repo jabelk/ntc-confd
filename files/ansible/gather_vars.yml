@@ -1,0 +1,60 @@
+---
+
+  - name: PLAY 1 - ISSUE API CALL TO ConfD
+    hosts: confd
+    connection: local
+    gather_facts: no
+
+    tasks:
+
+      - name: GET Dummy ALL Vars Info
+        uri:
+          url: http://{{ ansible_host }}:{{ port }}/api/running/yaml_all_vars?deep
+          method: GET
+          user: "{{ confd_user }}"
+          password: "{{ confd_pass }}"
+          return_content: yes
+          validate_certs: no
+          headers:
+            Accept: application/vnd.yang.data+json
+        register: response
+
+      - set_fact:
+          confd_group_rest_response: "{{ response['content'] }}"
+
+      - name: GET Dummy HOST Vars Info
+        uri:
+          url: http://{{ ansible_host }}:{{ port }}/api/running/yaml_host_vars?deep
+          method: GET
+          user: "{{ confd_user }}"
+          password: "{{ confd_pass }}"
+          return_content: yes
+          validate_certs: no
+          headers:
+            Accept: application/vnd.yang.data+json
+        register: response
+
+      - set_fact:
+          confd_host_rest_response: "{{ response['content'] }}"
+
+      - name: COPY CONFD CSR1 VARS to ANSIBLE LOCATION
+        template:
+          src: copy_host_vars_csr1.j2
+          dest: host_vars/csr1.yml
+
+      - name: COPY CONFD CSR1 VARS to ANSIBLE LOCATION
+        template:
+          src: copy_host_vars_csr2.j2
+          dest: host_vars/csr2.yml
+
+      - name: COPY CONFD CSR1 VARS to ANSIBLE LOCATION
+        template:
+          src: copy_host_vars_csr3.j2
+          dest: host_vars/csr3.yml
+
+      - name: COPY CONFD CSR1 VARS to ANSIBLE LOCATION
+        template:
+          src: copy_group_vars_all.j2
+          dest: group_vars/all.yml
+
+

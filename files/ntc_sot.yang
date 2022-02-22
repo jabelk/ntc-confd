@@ -1,0 +1,270 @@
+module ntc_sot {
+  namespace "http://tail-f.com/ns/example/ntc_sot";
+  prefix ntc;
+
+  import tailf-common {
+    prefix tailf;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+container yaml_host_vars{
+  list inventory_list
+  {
+    key "inventory_hostname";
+    leaf inventory_hostname
+    {
+      type inet:host;
+    }
+
+  list ospf_interfaces
+  {
+    key "name";
+    leaf name
+    {
+      type string;
+    }
+
+  }
+
+  leaf router_id
+  {
+    type string;
+  }
+  list interfaces
+  {
+    key "name";
+
+    leaf name
+    {
+      type string;
+    }
+
+    leaf state
+    {
+      type enumeration
+      {
+        enum up;
+        enum down;
+      }
+    }
+
+    leaf ip
+    {
+      type inet:ipv4-address;
+    }
+
+    leaf mask
+    {
+      type string;
+    }
+
+    leaf description
+    {
+      type string;
+    }
+    leaf cdp
+    {
+      type boolean;
+    }
+
+    leaf vrf
+    {
+      type string;
+    }
+
+  }
+ }
+}
+
+container yaml_all_vars{
+container config
+    {
+      leaf eos
+      {
+        type string;
+      }
+      leaf ios
+      {
+        type string;
+      }
+      leaf nxos
+      {
+        type string;
+      }
+      leaf junos
+      {
+        type string;
+      }
+
+    }
+
+    container connection_details
+    {
+      leaf username
+      {
+        type string;
+      }
+      leaf password
+      {
+        type string;
+      }
+      leaf host
+      {
+        type string;
+      }
+    }
+
+    leaf domain_name
+    {
+      type string;
+    }
+    list features
+    {
+      key "list_index";
+      ordered-by user;
+
+      leaf list_index
+      {
+        type uint64;
+      }
+
+      leaf cmd
+      {
+        type string;
+      }
+
+      leaf enabled
+      {
+        type boolean;
+      }
+    }
+
+    container ospf
+    {
+      leaf instance_tag
+      {
+        type uint64;
+      }
+
+      leaf area
+      {
+        type inet:ip-address;
+      }
+      leaf log_adj
+      {
+        type boolean;
+      }
+    }
+
+    leaf mgmt_default_route_next_hop
+    {
+      type inet:ip-address;
+    }
+
+    container snmp
+    {
+      leaf ro_comm
+      {
+        type string;
+      }
+      leaf location
+      {
+        type string;
+      }
+      leaf contact
+      {
+        type string;
+      }
+    }
+}
+container device_vars {
+  list device_list
+  {
+    key "device_name";
+    leaf device_name
+    {
+      type inet:host;
+    }
+
+    leaf mgmt_ip
+    {
+      type inet:ip-address;
+    }
+
+    container acl
+    {
+      list meta_data
+      {
+        key "sequence_number";
+        leaf sequence_number
+        {
+          type uint64;
+        }
+        // example from https://github.com/networktocode/ntc-temp/blob/master/ansible-playbooks/app-demo/data_model/access-list.yml
+        leaf action
+        {
+          type enumeration
+          {
+            enum permit;
+            enum deny;
+          }
+        }
+          leaf protocol
+          {
+            type enumeration
+            {
+              enum tcp;
+              enum udp;
+            }
+          }
+          leaf source
+          {
+            type inet:ip-prefix;
+          }
+          leaf destination
+          {
+            type inet:ip-prefix;
+          }
+          leaf port
+          {
+            type inet:port-number;
+          }
+          leaf log
+          {
+            type boolean;
+          }
+
+
+        
+      }
+    }
+  }
+
+
+}
+
+  container test_action {
+      tailf:action dynamo_rest_call {
+        tailf:actionpoint "act-dynamo_rest_call";
+    /*
+        input {
+          leaf ansible_playbook {
+            type string;
+            mandatory true;
+          }
+        }
+    */
+        output {
+          leaf rest_output {
+            type string;
+            mandatory true;
+          }
+        }
+      }
+
+
+  }
+}

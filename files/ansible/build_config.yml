@@ -1,0 +1,12 @@
+  - name: PLAY 1 - ISSUE API CALL TO ConfD
+    hosts: iosxe
+    connection: local
+    gather_facts: no
+
+    tasks:
+
+
+      - name: BUILD CONFIGS FROM NEW YAML
+        template:
+          src: csr.j2
+          dest: ./configs/{{ inventory_hostname }}.cfg

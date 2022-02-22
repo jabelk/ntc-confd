@@ -1,0 +1,6 @@
+{% set group_vars_confd = confd_group_rest_response.get('ntc_sot:yaml_all_vars') %}
+
+
+
+{{ group_vars_confd | to_nice_json  }}
+

@@ -1,0 +1,4 @@
+{% set host_vars_confd = confd_host_rest_response.get('ntc_sot:yaml_host_vars').inventory_list %}
+
+{{ host_vars_confd[2] | to_nice_json }}
+

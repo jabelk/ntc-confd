@@ -1,0 +1,40 @@
+127.0.0.1 localhost
+
+
+
+# KEEP THESE, BUT FEEL FREE TO ADD OTHERS
+# PER DEVICE BASED ON PROJECTS
+
+68.170.147.164 n9396-1 n9396-1.ntc.com
+68.170.147.165 n9396-2 n9396-2.ntc.com
+68.170.147.166 n9372-1 n9372-1.ntc.com
+68.170.147.167 n9372-2 n9372-2.ntc.com
+68.170.147.168 n9372-3 n9372-3.ntc.com
+68.170.147.169 n9372-4 n9372-4.ntc.com
+68.170.147.170 n9372-5 n9372-5.ntc.com
+68.170.147.171 n9372-6 n9372-6.ntc.com
+
+
+68.170.147.189 console console.ntc.com
+68.170.147.190 ntc-vpn ntc-vpn.ntc.com
+68.170.147.190 external-mgmt-server external-mgmt-server.ntc.com
+
+# need to add all private IPs too
+
+10.8.0.1   internal-mgmt-server.ntc.com
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+# vagrant network
+confd.test 192.168.60.4
+configengine.test 192.168.60.5
+sometruth.test 192.168.60.6
+
+

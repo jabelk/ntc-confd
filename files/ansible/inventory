@@ -1,0 +1,26 @@
+[servers]
+confd ansible_host=192.168.60.4 port=8008 confd_user=admin confd_pass=admin
+configengine ansible_host=192.168.60.5
+sometruth ansible_host=192.168.60.6
+
+[local]
+localhost ansible_connection=local 
+
+# Variables that will be applied to all servers
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_pass=vagrant
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_paramiko_host_key_checking=False
+
+
+[iosxe]
+csr1
+csr2
+csr3
+
+[iosxe:vars]
+ansible_network_os=ios
+ntc_os=ios
+ntc_api=ssh
+ntc_vendor=cisco
