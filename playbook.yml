@@ -1,0 +1,18 @@
+---
+- hosts: all
+  connection: paramiko
+  become: yes
+
+  vars:
+    # Vars can also be passed in via CLI with `--extra-vars="name=value"`.
+    confd_install_location: "/home/{{ ansible_ssh_user }}/confd-install"
+    user: vagrant
+    hostname: ntc
+    cookiecutterurl: "https://github.com/jabelk/cookiecutter-confd.git"
+    #pwd: "$6$rounds=656000$nTPtczojRZVXaGB3$3RMKsWnUOf2Ls5FpK0DKqbdIe6keGGm5TR/xneh7wRYiuAJSuapM7FpSHyzG41KpqUt7Rbfl877Obr153qYK90"
+
+  tasks:
+    - import_tasks: build-vm.yml
+    - import_tasks: install-confd.yml
+    - import_tasks: install-ntc-confd.yml
+    - import_tasks: install-ntc-sot.yml

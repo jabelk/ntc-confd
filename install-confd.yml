@@ -1,0 +1,19 @@
+---
+
+    - name: Create ConfD install Directory
+      become_user: "{{ user }}"
+      file: path=/home/{{ user }}/confd-install state=directory owner={{ user }} group={{ user }}
+
+    - name: Copy ConfD Installer
+      become_user: "{{ user }}"
+      copy: src=./files/confd-6.7.linux.x86_64.installer.bin dest=/home/{{ user }} owner={{ user }} group={{ user }}
+
+    - name: INSTALL CONFD
+      command: "sh /home/{{ user }}/confd-6.7.linux.x86_64.installer.bin /home/{{ user }}/confd-install"
+      become_user: "{{ user }}"
+      ignore_errors: yes
+      register: confd_install
+
+    - name: DEBUG CONFD INSTALL
+      debug:
+       var: confd_install

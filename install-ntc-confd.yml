@@ -1,0 +1,21 @@
+---
+  - name: ConfD Directory
+    git:  repo={{ item }} recursive=yes force=yes dest=/home/{{ user }}/cookiecutter-confd
+    become_user: "{{ user }}"
+    with_items:
+      - https://github.com/jabelk/cookiecutter-confd.git
+
+  - name: Copy .cookiecutterrc
+    become_user: "{{ user }}"
+    copy: src=./files/cookiecutterrc dest=/home/{{ user }}/.cookiecutterrc owner={{ user }} group={{ user }}
+
+  - name: Create ConfD SoT from cookiecutter
+    shell: "cookiecutter --config-file /home/{{ user }}/.cookiecutterrc /home/{{ user }}/cookiecutter-confd --no-input"
+    ignore_errors: yes
+    become_user: "{{ user }}"
+    register: cookiecutteroutput
+
+  - name: DEBUG Cookiecutter
+    debug:
+     var: cookiecutteroutput
+

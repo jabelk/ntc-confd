@@ -1,0 +1,35 @@
+---
+
+  - name: Create ConfD install Directory
+    file: path=/home/{{ user }}/ansible state=directory owner={{ user }} group={{ user }} mode=0644
+    when: "'configengine' in inventory_hostname " 
+
+  - name: COPY SOT ANSIBLE DIR
+    synchronize: 
+      src: "./files/ansible/" 
+      dest: "/home/{{ user }}/ansible/"
+      recursive: yes
+      mode: push
+    when: "'configengine' in inventory_hostname " 
+
+  - name: COPY SOT ANSIBLE DIR
+    file: 
+      path: "/home/{{ user }}/ansible"
+      group: "{{ user }}"
+      owner: "{{ user }}"
+      recurse: yes
+    when: "'configengine' in inventory_hostname " 
+
+
+
+  - name: COPY SOT CONFD DIR
+    copy: 
+      src: "./files/ntc_sot.yang" 
+      dest: "/home/{{ user }}/ntc_confd_sot/"
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      mode: 0644
+    become_user: "{{ user }}"
+    become: yes
+    # become_method: "su"
+    when: "'confd' in inventory_hostname " 

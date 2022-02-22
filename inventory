@@ -1,0 +1,11 @@
+[multi]
+confd.test ansible_host=192.168.60.4
+configengine.test ansible_host=192.168.60.5
+sometruth.test ansible_host=192.168.60.6
+
+# Variables that will be applied to all servers
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_pass=vagrant
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_paramiko_host_key_checking=False
